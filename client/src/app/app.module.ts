@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { QuestionComponent } from './components/question/question.component';
-import { AnswerComponent } from './components/question/answer/answer.component';
 import { LeaderBoardComponent } from './components/leader-board/leader-board.component';
 import { GameComponent } from './components/game/game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,15 +13,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
-import {FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		WelcomeComponent,
-		QuestionComponent,
-		AnswerComponent,
 		LeaderBoardComponent,
 		GameComponent
 	],
@@ -31,14 +30,17 @@ import {FormsModule } from '@angular/forms';
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
+		FlexLayoutModule,
 		MatToolbarModule,
 		MatButtonModule,
-    MatCardModule,
-    MatInputModule,
+		MatCardModule,
+		MatInputModule,
+		MatStepperModule,
 		FormsModule,
 		ReactiveFormsModule,
-		StoreModule.forRoot({}, {}),
-		EffectsModule.forRoot([])
+		StoreModule.forRoot({}),
+		EffectsModule.forRoot([]),
+		HttpClientModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
