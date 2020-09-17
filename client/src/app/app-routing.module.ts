@@ -7,7 +7,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'game' },
+  { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'game', component: GameComponent },
   { path: 'leader-board', component: LeaderBoardComponent },

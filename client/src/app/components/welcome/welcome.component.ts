@@ -13,7 +13,7 @@ export class WelcomeComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private gameService: GameService
-		) { }
+	) { }
 
 	ngOnInit(): void {
 		const alphaNumericExp = '^[a-zA-Z0-9]+$';
@@ -26,5 +26,5 @@ export class WelcomeComponent implements OnInit {
 	startGame() {
 		this.gameService.createNewUser(this.signInForm.get('username').value);
 	}
-
+	// todo: add error handaling for username taken/required/notValid
 }
