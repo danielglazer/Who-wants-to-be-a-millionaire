@@ -11,24 +11,36 @@ import { GameComponent } from './components/game/game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    WelcomeComponent,
-    QuestionComponent,
-    AnswerComponent,
-    LeaderBoardComponent,
-    GameComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		WelcomeComponent,
+		QuestionComponent,
+		AnswerComponent,
+		LeaderBoardComponent,
+		GameComponent
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		MatToolbarModule,
+		MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+		FormsModule,
+		ReactiveFormsModule,
+		StoreModule.forRoot({}, {}),
+		EffectsModule.forRoot([])
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

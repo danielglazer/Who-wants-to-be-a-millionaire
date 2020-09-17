@@ -1,1 +1,15 @@
-<router-outlet> </router-outlet>
+<div fxLayout="column">
+	<header fxFlex="10">
+		<mat-toolbar color="primary">
+			<span class="span">Who Wants To Be A Millionare?</span>
+		</mat-toolbar>
+	</header>
+	<main fxFlex="80">
+		<router-outlet> </router-outlet>
+	</main>
+	<footer fxFlexOffset="auto">
+		<mat-toolbar color="primary"> </mat-toolbar>
+	</footer>
+</div>
+
+<!-- todo: make header and footer sticky and center using fxFlex-->
