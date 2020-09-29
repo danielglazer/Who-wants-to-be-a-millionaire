@@ -1,15 +1,16 @@
+import { AppState, GameScore, UserData } from './state/app.state';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 
-import { GameScore, GameState } from './state/app.state';
 import { map } from 'rxjs/operators'
 import { Question } from './models/question.interface';
 import { Response } from './models/response.interface';
-import { SignUpFail, SignUpSuccess } from './state/app.actions';
+import { GameOver, SignUpFail, SignUpSuccess } from './state/app.actions';
 import { User } from './models/user.interface';
+import { selectUser } from './state/app.reducers';
 
 
 @Injectable({
@@ -20,25 +21,32 @@ export class GameService {
 
 	constructor(private router: Router,
 		private http: HttpClient,
-		private store: Store<GameState>) { }
+		private store: Store<AppState>) { }
 
 	createNewUser(username: string): boolean {
-		if (this.checkIfUsernameExists(username)) this.store.dispatch(new SignUpFail('username exists'));
+		if (!this.checkIfUsernameExists(username)) this.store.dispatch(new SignUpFail('username exists'));
 
 		this.store.dispatch(new SignUpSuccess(username));
-		console.log(username);
 		this.router.navigateByUrl('game');
 		return true;
 	}
 
-	checkIfUsernameExists(username: string): boolean {
-		return false;
-		// return this.store.select(gameState => { gameState.leaderBoard.findIndex((gameScore: GameScore) => gameScore.username) })
+	checkIfUsernameExists(username: string): Observable<boolean> {
+		// return this.store.select(appState => {
+		// 	appState.leaderBoard.findIndex((gameScore) =>
+		// 		gameScore.username === username) === 1
+		// })
+		return of(false);
 		// return this.users.findIndex(user => user.username === username) !== -1;
 	}
 
 	finishGame(): void {
-		this.router.navigateByUrl('leader-board');
+		// this.store.pipe(select(selectUser)).subscribe((user: UserData) => {
+		// 	if(user.mistakes > 2 || user.questions.length === 10){
+		// 		this.store.dispatch(new GameOver(user))
+		// 		this.router.navigateByUrl('leader-board');
+		// 	}
+		// });
 	}
 
 	getUsersLeaderBoard(): Observable<GameScore[]> {

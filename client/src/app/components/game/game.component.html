@@ -1,10 +1,9 @@
 <mat-card>
 	<mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
 		Game State's Stats
-		currentSocre
-		<p>Current Score: {{ state.currentScore }}</p>
-		<p>mistakes: {{ state.mistakes }}</p>
-		<p>Lifebuoys: {{ state.lifeBuoys }}</p>
+		<!-- <p>Current Score: {{ (state | async)?.userData.currentScore }}</p>
+		<p>mistakes: {{ (state | async)?.userData?.mistakes }}</p>
+		<p>Lifebuoys: {{ (state | async)?.userData?.lifeBuoys }}</p> -->
 	</mat-card-header>
 	<mat-card-content>
 		<mat-horizontal-stepper labelPosition="bottom" linear>
@@ -33,14 +32,14 @@
 					mat-button
 					color="primary"
 					*ngIf="!questionAnswered"
-					(click)="answerQuestion(question.correct_answer)"
+					(click)="answerQuestion(question, question.correct_answer)"
 					[disabled]="!selectedAnswer"
 				>
 					OK
 				</button>
 				<button
-					(click)="skipClicked()"
-					*ngIf="!questionAnswered && state.lifeBuoys > 0"
+					(click)="skipClicked(question)"
+					*ngIf="!questionAnswered && (state | async)?.userData?.lifeBuoys > 0"
 					mat-button
 					color="accent"
 					matStepperNext

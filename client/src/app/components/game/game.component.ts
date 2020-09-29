@@ -3,13 +3,12 @@ import { Observable } from 'rxjs';
 
 import { GameService } from './../../game.service';
 import { Question } from 'src/app/models/question.interface';
+import { AppState, UserData } from 'src/app/state/app.state';
+import { select, Store } from '@ngrx/store';
+import { AnswerQuestion } from 'src/app/state/app.actions';
 
 
-interface UserState {
-	lifeBuoys: number;
-	mistakes: number;
-	currentScore: number;
-}
+
 
 @Component({
 	selector: 'app-game',
@@ -17,36 +16,42 @@ interface UserState {
 	styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-	// response: Observable<Response>;
 	questions: Observable<Question[]>;
 	selectedAnswer: string;
 	questionAnswered: boolean;
-	// answers: Observable<string[]>;
-	state: UserState;
+	state: Observable<any>;
+	mistakes: Observable<number>;
 
-	constructor(private gameService: GameService) {
-		this.newQuestionReset();
-		this.state = { lifeBuoys: 3, mistakes: 0, currentScore: 0 };
-	}
+
+	constructor(private gameService: GameService,
+		private store: Store<UserData>) { }
 
 	ngOnInit() {
+		this.state = this.store.pipe(
+			// select(selectLeaderBoard));
+			select((appState: any) => appState.userData));
+		// todo: fix the selector so it won't return undefined
+		this.state.subscribe(user => {
+			console.log(user);
+			debugger;
+		});
 		this.questions = this.gameService.getQuestions();
+		this.newQuestionReset();
+		// this.mistakes = this.store.pipe(select(selectUserMistakes));
+		// this.mistakes.subscribe(user => console.log(user));
 	}
-
 	answerSelected(answer: string) {
 		this.selectedAnswer = answer;
 	}
 
-	answerQuestion(correct_answer: string) {
+	answerQuestion(question: Question, correct_answer: string) {
 		this.questionAnswered = true;
 		const isCorrectAnswer = this.selectedAnswer
 			&& this.selectedAnswer === correct_answer;
+		question.answerCorrectly = isCorrectAnswer;
+		this.store.dispatch(new AnswerQuestion(question));
 
-		if (!isCorrectAnswer) this.state.mistakes++;
-		else this.state.currentScore += 10;
-
-		if (this.state.mistakes > 2) this.gameOver();
-		console.log(isCorrectAnswer);
+		// if (this.state.mistakes > 2) this.gameOver();
 	}
 
 	newQuestionReset() {
@@ -59,8 +64,8 @@ export class GameComponent implements OnInit {
 		// todo: add timer to question submition
 	}
 
-	skipClicked() {
-		this.state.lifeBuoys--;
+	skipClicked(question: Question) {
+		this.store.dispatch(new AnswerQuestion(question));
 		this.nextQuestion();
 	}
 	gameOver() {

@@ -1,14 +1,16 @@
 import { Question } from 'src/app/models/question.interface';
 import { Action } from '@ngrx/store';
+import { UserData } from './app.state';
 
 export enum AppActionsTypes {
 	SignUp = '[User] SignUp',
 	SignUpSuccess = '[User] SignUp Success',
 	SignUpFail = '[User] SignUp Fail',
-	AnswerQuestion = '[Movies] Select',
-	Load = '[Movies] Load',
-	LoadSuccess = '[Movies] Load Success',
-	LoadFail = '[Movies] Load Fail',
+	AnswerQuestion = '[User] AnswerQuestion',
+	Load = '[Question] Load',
+	LoadSuccess = '[Question] Load Success',
+	LoadFail = '[Question] Load Fail',
+	GameOver = '[User] Game Over'
 }
 
 export class SignUp implements Action {
@@ -27,11 +29,15 @@ export class SignUpFail implements Action {
 }
 
 
-export class SelectMovie implements Action {
+export class AnswerQuestion implements Action {
 	readonly type = AppActionsTypes.AnswerQuestion;
-	constructor(public payload: string) { }
+	constructor(public payload: Question) { }
 }
 
+export class GameOver implements Action {
+	readonly type = AppActionsTypes.GameOver;
+	constructor(public payload: UserData) { }
+}
 export class Load implements Action {
 	readonly type = AppActionsTypes.Load;
 }
@@ -47,6 +53,6 @@ export class LoadFail implements Action {
 }
 
 export type AppActions =
-	SignUp | SignUpSuccess | SignUpFail | SelectMovie |
-	Load | LoadFail | LoadSuccess;
+	SignUp | SignUpSuccess | SignUpFail | AnswerQuestion |
+	Load | LoadFail | LoadSuccess | GameOver;
 

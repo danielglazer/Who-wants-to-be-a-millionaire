@@ -18,6 +18,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { appReducer } from './state/app.reducers';
 
 @NgModule({
 	declarations: [
@@ -38,9 +41,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 		MatStepperModule,
 		FormsModule,
 		ReactiveFormsModule,
-		StoreModule.forRoot({}),
+		StoreModule.forRoot({ app: appReducer }),
 		EffectsModule.forRoot([]),
-		HttpClientModule
+		HttpClientModule,
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
 	],
 	providers: [],
 	bootstrap: [AppComponent]
